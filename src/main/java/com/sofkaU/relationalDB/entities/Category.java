@@ -23,5 +23,10 @@ public class Category {
     )
     private List<Note> notes = new ArrayList<>();
 
+    public Category addNote(Note note){
+        this.notes.add(note);
+        return this;
+    }
+
 
 }
