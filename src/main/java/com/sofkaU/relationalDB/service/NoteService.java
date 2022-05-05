@@ -26,9 +26,9 @@ public class NoteService implements INoteService {
     }
 
     @Override
-    public void deleteNote(Note note) {
+    public void deleteNote(Long noteId) {
         //check if exists
-        noteRepository.deleteById(note.getId());
+        noteRepository.deleteById(noteId);
 
     }
 

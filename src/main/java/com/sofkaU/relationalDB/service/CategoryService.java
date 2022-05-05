@@ -29,15 +29,15 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
-    public void deleteCategory(Category category) {
+    public void deleteCategory(Long categoryId) {
         //check if category with that id exists
         //remove all notes related to that category
-        Category categoryToBeDeleted = categoryRepository.findById(category.getId()).get();
+        Category categoryToBeDeleted = categoryRepository.findById(categoryId).get();
         if (categoryToBeDeleted.getNotes().size() >= 0){
             categoryToBeDeleted.getNotes().forEach(note -> noteRepository.deleteById(note.getId()));
         }
 
-        categoryRepository.deleteById(category.getId());
+        categoryRepository.deleteById(categoryId);
 
     }
 }

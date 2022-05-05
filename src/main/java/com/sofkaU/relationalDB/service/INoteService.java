@@ -7,7 +7,7 @@ public interface INoteService {
 
     Category createNote(Note note);
 
-    void deleteNote(Note note);
+    void deleteNote(Long noteId);
 
     void checkNote(Note note);
 
