@@ -53,9 +53,14 @@ public class NoteService implements INoteService {
 
     @Override
     public NoteDTO updateNote(NoteDTO noteDTO) {
-        Note note = modelMapper.map(noteDTO, Note.class);
         //check if exists
-
+        boolean exists = noteRepository.existsById(noteDTO.getId());
+        if(!exists){
+            throw new IllegalStateException(
+                    "Note with id " + noteDTO.getId() + " does not exists"
+            );
+        }
+        Note note = modelMapper.map(noteDTO, Note.class);
         note =  noteRepository.save(note);
         noteDTO = modelMapper.map(note, NoteDTO.class);
         return noteDTO;
