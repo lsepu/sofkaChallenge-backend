@@ -33,15 +33,9 @@ public class NoteService implements INoteService {
     }
 
     @Override
-    public void checkNote(Note note) {
+    public Note updateNote(Note note) {
         //check if exists
-        noteRepository.save(note);
-
+        return noteRepository.save(note);
     }
 
-    @Override
-    public void editNote(Note note) {
-        //check if exists
-        noteRepository.save(note);
-    }
 }
