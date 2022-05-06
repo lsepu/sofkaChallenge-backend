@@ -10,6 +10,6 @@ public interface ICategoryService {
 
     CategoryDTO createCategory(CategoryDTO categoryDTO);
 
-    void deleteCategory(Long categoryId);
+    boolean deleteCategory(Long categoryId);
 
 }

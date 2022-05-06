@@ -9,7 +9,7 @@ public interface INoteService {
 
     NoteDTO createNote(NoteDTO noteDTO);
 
-    void deleteNote(Long noteId);
+    boolean deleteNote(Long noteId);
 
     NoteDTO updateNote(NoteDTO noteDTO);
 }

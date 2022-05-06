@@ -40,9 +40,14 @@ public class NoteService implements INoteService {
     }
 
     @Override
-    public void deleteNote(Long noteId) {
+    public boolean deleteNote(Long noteId) {
         //check if exists
+        boolean exists = noteRepository.existsById(noteId);
+        if(!exists){
+            return false;
+        }
         noteRepository.deleteById(noteId);
+        return true;
 
     }
 

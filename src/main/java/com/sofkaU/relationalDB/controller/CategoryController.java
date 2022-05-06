@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,13 +27,17 @@ public class CategoryController {
     }
 
     @PostMapping("create/category")
-    public CategoryDTO createCategory(@RequestBody CategoryDTO categoryDTO) {
-        return categoryService.createCategory(categoryDTO);
+    public ResponseEntity<CategoryDTO> createCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
+        categoryDTO = categoryService.createCategory(categoryDTO);
+        return new ResponseEntity<>(categoryDTO, HttpStatus.CREATED);
     }
 
     @DeleteMapping("delete/category/{id}")
-    public void deleteCategory(@PathVariable Long id) {
-        categoryService.deleteCategory(id);
+    public ResponseEntity<String> deleteCategory(@PathVariable Long id) {
+        if(categoryService.deleteCategory(id)){
+            return new ResponseEntity<>("Category successfully deleted", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Category not found", HttpStatus.NOT_FOUND);
     }
 
 }

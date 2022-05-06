@@ -51,8 +51,12 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
-    public void deleteCategory(Long categoryId) {
+    public boolean deleteCategory(Long categoryId) {
         //check if category with that id exists
+        boolean exists = categoryRepository.existsById(categoryId);
+        if(!exists){
+            return false;
+        }
         //remove all notes related to that category
         Category categoryToBeDeleted = categoryRepository.findById(categoryId).get();
         if (categoryToBeDeleted.getNotes().size() >= 0) {
@@ -60,6 +64,7 @@ public class CategoryService implements ICategoryService {
         }
 
         categoryRepository.deleteById(categoryId);
+        return true;
 
     }
 }
