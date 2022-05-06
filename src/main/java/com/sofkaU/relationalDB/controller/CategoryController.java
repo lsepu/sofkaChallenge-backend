@@ -5,14 +5,15 @@ import com.sofkaU.relationalDB.entities.Category;
 import com.sofkaU.relationalDB.service.CategoryService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Controller
-@RequestMapping("api/v1/categories/")
+@RestController
+@RequestMapping("api/v1/")
 @CrossOrigin(origins = "http://localhost:3000/")
 public class CategoryController {
 
@@ -22,7 +23,7 @@ public class CategoryController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @GetMapping
+    @GetMapping("get/categories")
     public List<CategoryDTO> getAllCategories() {
 
         //map all categories to the DTO
@@ -35,7 +36,7 @@ public class CategoryController {
         return categoriesDTO;
     }
 
-    @PostMapping("create")
+    @PostMapping("create/category")
     public CategoryDTO createCategory(@RequestBody CategoryDTO categoryDTO) {
         Category category = modelMapper.map(categoryDTO,Category.class );
         category = categoryService.createCategory(category);
@@ -43,7 +44,7 @@ public class CategoryController {
         return categoryDTO;
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("delete/category/{id}")
     public void deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategory(id);
     }

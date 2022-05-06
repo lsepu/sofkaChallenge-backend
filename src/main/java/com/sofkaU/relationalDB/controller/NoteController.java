@@ -7,11 +7,10 @@ import com.sofkaU.relationalDB.entities.Note;
 import com.sofkaU.relationalDB.service.NoteService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
-@RequestMapping("api/v1/notes/")
+@RestController
+@RequestMapping("api/v1/")
 @CrossOrigin(origins = "http://localhost:3000/")
 public class NoteController {
 
@@ -21,7 +20,7 @@ public class NoteController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @PostMapping("create")
+    @PostMapping("create/note")
     public CategoryDTO createNote(@RequestBody NoteDTO noteDTO){
         Note note = modelMapper.map(noteDTO, Note.class);
         Category category =  noteService.createNote(note);
@@ -29,12 +28,12 @@ public class NoteController {
         return categoryDTO;
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("delete/note/{id}")
     public void deleteNote(@PathVariable Long id){
         noteService.deleteNote(id);
     }
 
-    @PutMapping("update")
+    @PutMapping("update/note")
     public NoteDTO editNote(@RequestBody NoteDTO noteDTO){
         Note note = modelMapper.map(noteDTO, Note.class);
         note =  noteService.updateNote(note);
