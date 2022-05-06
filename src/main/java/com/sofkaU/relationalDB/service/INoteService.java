@@ -1,13 +1,15 @@
 package com.sofkaU.relationalDB.service;
 
+import com.sofkaU.relationalDB.dto.CategoryDTO;
+import com.sofkaU.relationalDB.dto.NoteDTO;
 import com.sofkaU.relationalDB.entities.Category;
 import com.sofkaU.relationalDB.entities.Note;
 
 public interface INoteService {
 
-    Category createNote(Note note);
+    NoteDTO createNote(NoteDTO noteDTO);
 
     void deleteNote(Long noteId);
 
-    Note updateNote(Note note);
+    NoteDTO updateNote(NoteDTO noteDTO);
 }

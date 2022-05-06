@@ -1,14 +1,14 @@
 package com.sofkaU.relationalDB.service;
 
-import com.sofkaU.relationalDB.entities.Category;
+import com.sofkaU.relationalDB.dto.CategoryDTO;
 
 import java.util.List;
 
 public interface ICategoryService {
 
-    List<Category> findAllCategories();
+    List<CategoryDTO> findAllCategories();
 
-    Category createCategory(Category category);
+    CategoryDTO createCategory(CategoryDTO categoryDTO);
 
     void deleteCategory(Long categoryId);
 

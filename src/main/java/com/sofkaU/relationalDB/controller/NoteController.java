@@ -1,9 +1,6 @@
 package com.sofkaU.relationalDB.controller;
 
-import com.sofkaU.relationalDB.dto.CategoryDTO;
 import com.sofkaU.relationalDB.dto.NoteDTO;
-import com.sofkaU.relationalDB.entities.Category;
-import com.sofkaU.relationalDB.entities.Note;
 import com.sofkaU.relationalDB.service.NoteService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +19,7 @@ public class NoteController {
 
     @PostMapping("create/note")
     public NoteDTO createNote(@RequestBody NoteDTO noteDTO){
-        Note note = modelMapper.map(noteDTO, Note.class);
-        Category category =  noteService.createNote(note);
-        CategoryDTO categoryDTO = modelMapper.map(category, CategoryDTO.class);
-        noteDTO = modelMapper.map(note, NoteDTO.class);
-        return noteDTO;
+        return noteService.createNote(noteDTO);
     }
 
     @DeleteMapping("delete/note/{id}")
@@ -36,10 +29,7 @@ public class NoteController {
 
     @PutMapping("update/note")
     public NoteDTO editNote(@RequestBody NoteDTO noteDTO){
-        Note note = modelMapper.map(noteDTO, Note.class);
-        note =  noteService.updateNote(note);
-        noteDTO = modelMapper.map(note, NoteDTO.class);
-        return noteDTO;
+        return noteService.updateNote(noteDTO);
     }
 
 

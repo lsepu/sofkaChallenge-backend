@@ -1,9 +1,11 @@
 package com.sofkaU.relationalDB.service;
 
+import com.sofkaU.relationalDB.dto.NoteDTO;
 import com.sofkaU.relationalDB.entities.Category;
 import com.sofkaU.relationalDB.entities.Note;
 import com.sofkaU.relationalDB.repository.CategoryRepository;
 import com.sofkaU.relationalDB.repository.NoteRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,14 +18,24 @@ public class NoteService implements INoteService {
     @Autowired
     private NoteRepository noteRepository;
 
+    //Mapper used for the DTO
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
-    public Category createNote(Note note) {
+    public NoteDTO createNote(NoteDTO noteDTO) {
+
+        Note note = modelMapper.map(noteDTO, Note.class);
         //set done initially as false
         note.setDone(false);
         Category category = categoryRepository.findById(note.getFkCategoryId()).get();
         category.addNote(note);
+        //save in repository
         noteRepository.save(note);
-        return categoryRepository.save(category);
+        categoryRepository.save(category);
+        //return Note DTO
+        noteDTO = modelMapper.map(note , NoteDTO.class);
+        return noteDTO;
 
     }
 
@@ -35,9 +47,13 @@ public class NoteService implements INoteService {
     }
 
     @Override
-    public Note updateNote(Note note) {
+    public NoteDTO updateNote(NoteDTO noteDTO) {
+        Note note = modelMapper.map(noteDTO, Note.class);
         //check if exists
-        return noteRepository.save(note);
+
+        note =  noteRepository.save(note);
+        noteDTO = modelMapper.map(note, NoteDTO.class);
+        return noteDTO;
     }
 
 }

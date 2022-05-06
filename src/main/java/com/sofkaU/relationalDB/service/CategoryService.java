@@ -1,14 +1,16 @@
 package com.sofkaU.relationalDB.service;
 
-
+import com.sofkaU.relationalDB.dto.CategoryDTO;
 import com.sofkaU.relationalDB.entities.Category;
 import com.sofkaU.relationalDB.repository.CategoryRepository;
 import com.sofkaU.relationalDB.repository.NoteRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryService implements ICategoryService {
@@ -19,16 +21,33 @@ public class CategoryService implements ICategoryService {
     @Autowired
     private NoteRepository noteRepository;
 
+    //Mapper used for the DTO
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
-    public List<Category> findAllCategories() {
-        return categoryRepository.findAll();
+    public List<CategoryDTO> findAllCategories() {
+        //map all categories to the DTO
+        List<Category> categories = categoryRepository.findAll();
+        List<CategoryDTO> categoriesDTO = categories
+                .stream()
+                .map(category -> modelMapper.map(category, CategoryDTO.class))
+                .collect(Collectors.toList());
+        return categoriesDTO;
     }
 
     @Override
-    public Category createCategory(Category category) {
-        //set empty list instead of null
+    public CategoryDTO createCategory(CategoryDTO categoryDTO) {
+
+        Category category = modelMapper.map(categoryDTO, Category.class);
+        //set empty list instead of null for notes
         category.setNotes(Collections.emptyList());
-        return categoryRepository.save(category);
+        //save in repository
+        category = categoryRepository.save(category);
+
+        //returns a DTO
+        categoryDTO = modelMapper.map(category, CategoryDTO.class);
+        return categoryDTO;
     }
 
     @Override

@@ -20,28 +20,14 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @Autowired
-    private ModelMapper modelMapper;
-
     @GetMapping("get/categories")
     public List<CategoryDTO> getAllCategories() {
-
-        //map all categories to the DTO
-        List<Category> categories = categoryService.findAllCategories();
-        List<CategoryDTO> categoriesDTO = categories
-                .stream()
-                .map(category -> modelMapper.map(category, CategoryDTO.class))
-                .collect(Collectors.toList());
-
-        return categoriesDTO;
+        return categoryService.findAllCategories();
     }
 
     @PostMapping("create/category")
     public CategoryDTO createCategory(@RequestBody CategoryDTO categoryDTO) {
-        Category category = modelMapper.map(categoryDTO,Category.class );
-        category = categoryService.createCategory(category);
-        categoryDTO = modelMapper.map(category, CategoryDTO.class);
-        return categoryDTO;
+        return categoryService.createCategory(categoryDTO);
     }
 
     @DeleteMapping("delete/category/{id}")
