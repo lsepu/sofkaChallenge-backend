@@ -33,7 +33,7 @@ public class CategoryService implements ICategoryService {
         //check if category with that id exists
         //remove all notes related to that category
         Category categoryToBeDeleted = categoryRepository.findById(categoryId).get();
-        if (categoryToBeDeleted.getNotes().size() >= 0){
+        if (categoryToBeDeleted.getNotes().size() >= 0) {
             categoryToBeDeleted.getNotes().forEach(note -> noteRepository.deleteById(note.getId()));
         }
 
