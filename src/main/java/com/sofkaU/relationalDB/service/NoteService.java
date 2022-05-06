@@ -18,6 +18,8 @@ public class NoteService implements INoteService {
 
     @Override
     public Category createNote(Note note) {
+        //set done initially as false
+        note.setDone(false);
         Category category = categoryRepository.findById(note.getFkCategoryId()).get();
         category.addNote(note);
         noteRepository.save(note);

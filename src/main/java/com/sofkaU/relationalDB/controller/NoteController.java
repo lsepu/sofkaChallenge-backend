@@ -21,11 +21,12 @@ public class NoteController {
     private ModelMapper modelMapper;
 
     @PostMapping("create/note")
-    public CategoryDTO createNote(@RequestBody NoteDTO noteDTO){
+    public NoteDTO createNote(@RequestBody NoteDTO noteDTO){
         Note note = modelMapper.map(noteDTO, Note.class);
         Category category =  noteService.createNote(note);
         CategoryDTO categoryDTO = modelMapper.map(category, CategoryDTO.class);
-        return categoryDTO;
+        noteDTO = modelMapper.map(note, NoteDTO.class);
+        return noteDTO;
     }
 
     @DeleteMapping("delete/note/{id}")

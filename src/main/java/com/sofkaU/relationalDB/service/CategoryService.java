@@ -7,6 +7,7 @@ import com.sofkaU.relationalDB.repository.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -25,6 +26,8 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public Category createCategory(Category category) {
+        //set empty list instead of null
+        category.setNotes(Collections.emptyList());
         return categoryRepository.save(category);
     }
 
